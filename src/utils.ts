@@ -1,6 +1,6 @@
 import { Http } from "@nativescript/core";
 
-const translate = async (voiceText) => {
+const translate = async (voiceText: string) => {
   const text = encodeURIComponent(voiceText);
 
   const url = `${process.env.TRANSLATION_API_URL}/v1/translate?text=${text}&to=es&from=en`;
