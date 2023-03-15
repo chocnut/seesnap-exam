@@ -43,5 +43,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>My custom recognition usage description. Overriding the default empty one in the plugin.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>My custom microphone usage description. Overriding the default empty one in the plugin.</string>
 </dict>
 </plist>
