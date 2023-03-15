@@ -13,6 +13,7 @@ import {
 } from "@nativescript/core";
 import AudioPlayer from "./AudioPlayer";
 import styles from "./styles";
+import * as utils from "../utils";
 
 const speechRecognition = new SpeechRecognition();
 const recorder = new TNSRecorder();
@@ -81,20 +82,8 @@ function MainScreen() {
 
   const translate = async () => {
     setIsTranslating(true);
-    const text = encodeURIComponent(voiceText);
-    const url = `${process.env.TRANSLATION_API_URL}/v1/translate?text=${text}&to=es&from=en`;
 
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": process.env.TRANSLATION_API_KEY ?? "",
-        "X-RapidAPI-Host": process.env.TRANSLATION_X_HEADER ?? "",
-      },
-    };
-
-    const res = await fetch(url, options);
-
-    const translationText = await res.json();
+    const translationText = await utils.translate(voiceText);
     setTranslatedText(translationText.translated_text.es);
     setIsTranslating(false);
   };
