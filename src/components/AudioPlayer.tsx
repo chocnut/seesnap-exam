@@ -33,10 +33,10 @@ const AudioPlayerComponent: React.FC = () => {
   return (
     <>
       {!isPlaying && (
-        <button style={styles.audioButtons} text="Play" onTap={play} />
+        <button style={styles.audioButtons} text="▶️" onTap={play} />
       )}
       {isPlaying && (
-        <button style={styles.audioButtons} text="Pause" onTap={pause} />
+        <button style={styles.audioButtons} text="⏸" onTap={pause} />
       )}
     </>
   );

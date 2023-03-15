@@ -53,8 +53,8 @@ function MainScreen() {
 
     const audioFolder = knownFolders.currentApp().getFolder("audio");
 
-    let androidFormat;
-    let androidEncoder;
+    let androidFormat: number | undefined;
+    let androidEncoder: number | undefined;
 
     if (isAndroid) {
       androidFormat = 2;
@@ -82,7 +82,7 @@ function MainScreen() {
   const translate = async () => {
     setIsTranslating(true);
     const text = encodeURIComponent(voiceText);
-    const url = `{process.env.TRANSLATION_API_URL}/v1/translate?text=${text}&to=es&from=en`;
+    const url = `${process.env.TRANSLATION_API_URL}/v1/translate?text=${text}&to=es&from=en`;
 
     const options = {
       method: "GET",

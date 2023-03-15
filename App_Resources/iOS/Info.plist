@@ -44,10 +44,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>My custom recognition usage description. Overriding the default empty one in the plugin.</string>
+	<string>SeeSnap Speech Recognition Information</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>My custom microphone usage description. Overriding the default empty one in the plugin.</string>
+	<string>SeeSnap microphone usage description.</string>
 	<key>NSMicrophoneUsageDescription</key>
-  <string>Recording Practice Sessions</string>
+  <string>SeeSnap Voice Recording</string>
 </dict>
 </plist>
