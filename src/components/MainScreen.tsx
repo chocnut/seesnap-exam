@@ -9,8 +9,10 @@ const speechRecognition = new SpeechRecognition();
 
 function MainScreen() {
   const [voiceText, setVoiceText] = useState("");
+  const [translatedText, setTranslatedText] = useState("");
   const [isMicAllowed, setIsMicAllowed] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false);
 
   const checkPermission = async () => {
     const isGranted = await speechRecognition.requestPermission();
@@ -19,6 +21,7 @@ function MainScreen() {
 
   const startListening = async (locale = "en-US") => {
     setVoiceText("");
+    setTranslatedText("");
     setIsRecording(true);
     await speechRecognition.startListening({
       locale,
@@ -31,9 +34,30 @@ function MainScreen() {
     });
   };
 
+  const translate = async () => {
+    setIsTranslating(true);
+    const text = encodeURIComponent(voiceText);
+    const url = `https://nlp-translation.p.rapidapi.com/v1/translate?text=${text}&to=es&from=en`;
+
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": process.env.TRANSLATION_API_KEY,
+        "X-RapidAPI-Host": "nlp-translation.p.rapidapi.com",
+      },
+    };
+
+    const res = await fetch(url, options);
+
+    const translationText = await res.json();
+    setTranslatedText(translationText.translated_text.es);
+    setIsTranslating(false);
+  };
+
   const stopListening = async () => {
     await speechRecognition.stopListening();
     setIsRecording(false);
+    await translate();
   };
 
   useEffect(() => {
@@ -51,7 +75,9 @@ function MainScreen() {
       <flexboxLayout flexDirection="column" style={styles.textContainer}>
         <label style={styles.label}>Translated Text</label>
         <textView editable={false} style={styles.textInput}>
-          <span style={styles.textContent}></span>
+          <span style={styles.textContent}>
+            {isTranslating ? "Translating..." : translatedText}
+          </span>
         </textView>
       </flexboxLayout>
 
