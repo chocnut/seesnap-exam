@@ -52,17 +52,12 @@ function MainScreen() {
     }
 
     const audioFolder = knownFolders.currentApp().getFolder("audio");
-    console.log(JSON.stringify(audioFolder));
 
     let androidFormat;
     let androidEncoder;
 
     if (isAndroid) {
-      // m4a
-      // static constants are not available, using raw values here
-      // androidFormat = android.media.MediaRecorder.OutputFormat.MPEG_4;
       androidFormat = 2;
-      // androidEncoder = android.media.MediaRecorder.AudioEncoder.AAC;
       androidEncoder = 3;
     }
 
@@ -79,13 +74,6 @@ function MainScreen() {
       format: androidFormat,
       encoder: androidEncoder,
       metering: false,
-      infoCallback: (infoObject) => {
-        console.log(JSON.stringify(infoObject));
-      },
-
-      errorCallback: (errorObject) => {
-        console.log(JSON.stringify(errorObject));
-      },
     };
 
     await recorder.start(recorderOptions);
@@ -94,13 +82,13 @@ function MainScreen() {
   const translate = async () => {
     setIsTranslating(true);
     const text = encodeURIComponent(voiceText);
-    const url = `https://nlp-translation.p.rapidapi.com/v1/translate?text=${text}&to=es&from=en`;
+    const url = `{process.env.TRANSLATION_API_URL}/v1/translate?text=${text}&to=es&from=en`;
 
     const options = {
       method: "GET",
       headers: {
         "X-RapidAPI-Key": process.env.TRANSLATION_API_KEY ?? "",
-        "X-RapidAPI-Host": "nlp-translation.p.rapidapi.com",
+        "X-RapidAPI-Host": process.env.TRANSLATION_X_HEADER ?? "",
       },
     };
 
@@ -114,7 +102,7 @@ function MainScreen() {
   const stopListening = async () => {
     await speechRecognition.stopListening();
     setIsRecording(false);
-    // await translate();
+    await translate();
 
     await recorder.stop();
     setShowAudioPlayer(true);

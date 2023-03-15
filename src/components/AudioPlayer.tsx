@@ -18,14 +18,7 @@ const AudioPlayerComponent: React.FC = () => {
       audioFile: `~/audio/recording.${platformExtension()}`,
       loop: false,
       completeCallback: function () {
-        console.log("Playback completed!");
         setIsPlaying(false);
-      },
-      errorCallback: function (errorObject) {
-        console.log(JSON.stringify(errorObject));
-      },
-      infoCallback: function (args) {
-        console.log(JSON.stringify(args));
       },
     });
     setIsPlaying(true);
